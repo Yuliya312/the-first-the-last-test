@@ -2,19 +2,15 @@
   <div class="navigation">
     <slot name="nav-toggle"></slot>
     <button class="close" @click="closeNav">X</button>
-    <!-- <nav class="navigation__nav">
+    <nav class="navigation__nav">
       <ul class="navigation__list">
-        <li class="navigation__item" v-for="link in links" :key="link.number">
-          <router-link
-            :to="{ name: 'home', hash: link.hash }"
-            class="navigation__link"
-          >
-            <span>{{ link.number }}</span>
+        <li class="navigation__item" v-for="link in links" :key="link.id">
+          <router-link class="navigation__link">
             {{ link.title }}
           </router-link>
         </li>
       </ul>
-    </nav> -->
+    </nav>
   </div>
 </template>
 
@@ -54,7 +50,9 @@ export default {
   height: 90vh;
 
   &__list {
-    /* @include absCenter; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     width: 100%;
   }
@@ -73,19 +71,7 @@ export default {
       color: $color-white;
       text-decoration: none;
       text-transform: uppercase;
-      background-image: linear-gradient(
-        120deg,
-        transparent 0%,
-        transparent 50%,
-        $color-white 50%
-      );
-      background-size: 220%;
       transition: background-position 0.4s, color 0.4s, transform 0.4s;
-
-      span {
-        margin-right: 1.5rem;
-        display: inline-block;
-      }
     }
 
     &:hover,

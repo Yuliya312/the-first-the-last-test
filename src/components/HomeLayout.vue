@@ -9,7 +9,9 @@
             class="header__logo"
           />
         </div>
-        <div class="header__nav-icon"></div>
+        <div class="header__nav-icon">
+          <router-link to="/nav"></router-link>
+        </div>
         <nav class="navigation">
           <ul class="navigation__list">
             <li class="navigation__item" v-for="link in links" :key="link.id">
@@ -164,17 +166,26 @@ export default {
     padding: 0 30px;
     display: flex;
     justify-content: space-between;
-
-    @include respond(phone) {
-      transform: scale(0.5);
-    }
   }
 
   &__nav-icon {
+    position: relative;
     display: none;
     width: 20px;
     height: 1px;
     background: rgba(40, 40, 40, 0.57);
+
+    &::before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: rgba(40, 40, 40, 0.57);
+
+      position: absolute;
+      top: 5px;
+      left: 0;
+    }
 
     @include respond(phone) {
       display: block;
