@@ -60,7 +60,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/swiper.scss";
+import "swiper/swiper-bundle.css";
 
 export default {
   name: "HomeLayout",
@@ -311,6 +311,7 @@ export default {
     font-size: 125.581px;
     line-height: 86%;
     text-transform: uppercase;
+    white-space: nowrap;
     color: $color-white;
     mix-blend-mode: darken;
     text-shadow: -0 -1px 0 $color-primary, 0 -1px 0 $color-primary,
