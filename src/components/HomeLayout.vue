@@ -9,6 +9,7 @@
             class="header__logo"
           />
         </div>
+        <div class="header__nav-icon"></div>
         <nav class="navigation">
           <ul class="navigation__list">
             <li class="navigation__item" v-for="link in links" :key="link.id">
@@ -17,7 +18,18 @@
           </ul>
         </nav>
       </div>
-      <p class="header__bg-title header__bg-title--left">{{ title }}</p>
+      <swiper ref="mySwiper" :options="swiperOption">
+        <swiper-slide >
+          <p class="header__bg-title">{{ title }}</p>
+        </swiper-slide>
+        <swiper-slide >
+          <p class="header__heading">{{ title }}</p>
+        </swiper-slide>
+        <swiper-slide>
+          <p class="header__bg-title">{{ title }}</p>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
       <div
         class="header__drag"
         id="drag"
@@ -39,16 +51,21 @@
           alt="a girl in sport close"
           class="header__img"
         />
-        <p class="header__heading">{{ title }}</p>
-        <p class="header__bg-title header__bg-title--right">{{ title }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/swiper.scss";
+
 export default {
   name: "HomeLayout",
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   data: () => ({
     links: [
       {
@@ -73,35 +90,37 @@ export default {
     tooltipStyle: {
       top: 0,
       left: 0
+    },
+    swiperOption: {
+      slidesPerView: 2,
+      centeredSlides: true,
+      spaceBetween: 30,
+      grabCursor: true
     }
   }),
   computed: {
-
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    }
   },
   methods: {
     move($event) {
       console.log($event);
     },
     mousemove(e) {
-      // let mouseX = e.clientX;
-      // let mouseY = e.clientY;
-      let galery = [document.querySelector(".header__galery") ];
-      // let content = window.getComputedStyle(document.querySelector('.header__galery'),':after');
-      console.dir(galery, e);
-      // console.log(content);
-      for (let i = 0; i < galery.length; i++) {
-        // let product = products[i];
-        // let product_image = product.querySelector('.product-image-wrap');
-        // let img_x = mouseX - this.coords(product_image).x;
-        // let img_y = mouseY - this.coords(product_image).y;
-        // product_image.style.transform = `translateY(-${img_y/40}px) translateX(-${img_x/40}px) translateZ(100px)`;
-        // let bgtext = product.querySelector('.bg-text');
-        // let bg_x = mouseX - this.coords(bgtext).x;
-        // bgtext.style.transform = `translateX(${bg_x/25}px)`;
-      }
+      let mouseX = e.clientX;
+      let mouseY = e.clientY;
+      let galery = document.querySelector(".header__galery");
+      let img = galery.querySelector(".header__img");
+      let img_x = mouseX - this.coords(galery).x;
+      let img_y = mouseY - this.coords(galery).y;
+      console.log(img_x, img_y);
+      img.style.transform = `translateY(-${img_y / 100}px) translateX(-${img_x /
+        40}px) translateZ(100px)`;
     },
-    coords (el) {
+    coords(el) {
       let coords = el.getBoundingClientRect();
+      console.log(coords)
       return {
         x: coords.left / 2,
         y: coords.top / 2
@@ -115,6 +134,7 @@ export default {
   },
   mounted() {
     window.addEventListener("mousemove", this.mouseIsMoving);
+    this.swiper.slideTo(1, 1000, false)
   },
   destroyed() {
     window.removeEventListener("mousemove", this.mouseIsMoving);
@@ -132,7 +152,6 @@ export default {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: contain;
-
   cursor: url("../assets/images/cursor.png"), pointer;
 }
 
@@ -142,8 +161,24 @@ export default {
   &__top {
     max-width: 1345px;
     margin: 40px auto 0;
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
+
+    @include respond(phone) {
+      transform: scale(0.5);
+    }
+  }
+
+  &__nav-icon {
+    display: none;
+    width: 20px;
+    height: 1px;
+    background: rgba(40, 40, 40, 0.57);
+
+    @include respond(phone) {
+      display: block;
+    }
   }
 
   &__galery {
@@ -157,6 +192,16 @@ export default {
     @include respond(tab-land) {
       width: 359px;
       height: 530px;
+    }
+
+    @include respond(phone) {
+      transform: translate(-50%, -50%) scale(0.76);
+    }
+
+    @include respond(small-phone) {
+      width: 250px;
+      height: 359px;
+      transform: translate(-50%, -50%);
     }
 
     &::before {
@@ -177,6 +222,10 @@ export default {
         height: 226px;
         top: 108px;
         left: -170px;
+      }
+
+      @include respond(phone) {
+        display: none;
       }
     }
 
@@ -199,6 +248,10 @@ export default {
         height: 162px;
         bottom: 42px;
         right: -200px;
+      }
+
+      @include respond(phone) {
+        display: none;
       }
     }
   }
@@ -224,14 +277,11 @@ export default {
   }
 
   &__heading {
-    position: absolute;
-    top: 50%;
-    left: -50%;
-    transform: translate(-5%, -50%);
-    width: 1000px;
+    width: 950px;
     text-align: center;
     text-transform: uppercase;
     mix-blend-mode: darken;
+    white-space: nowrap;
 
     font-family: "Schnyder Cond XL Demi";
     font-size: 125.581px;
@@ -241,20 +291,17 @@ export default {
 
     @include respond(tab-land) {
       font-size: 96px;
-      /* font-weight: 600; */
     }
   }
 
   &__bg-title {
-    position: absolute;
-    font-family: Schnyder Cond XL Demi;
+    font-family: "Schnyder Cond XL Demi";
     font-weight: 600;
     font-size: 125.581px;
     line-height: 86%;
     text-transform: uppercase;
     color: $color-white;
     mix-blend-mode: darken;
-    /* -webkit-text-stroke: 0.84px #580300; */
     text-shadow: -0 -1px 0 $color-primary, 0 -1px 0 $color-primary,
       -0 1px 0 $color-primary, 0 1px 0 $color-primary, -1px -0 0 $color-primary,
       1px -0 0 $color-primary, -1px 0 0 $color-primary, 1px 0 0 $color-primary,
@@ -264,43 +311,17 @@ export default {
       -1px 1px 0 $color-primary, 1px 1px 0 $color-primary;
 
     box-sizing: border-box;
-    transform: rotate(-1.5deg) translate(-5%, -50%);
+    transform: rotate(-1.5deg);
 
     @include respond(tab-land) {
       font-size: 96px;
-      /* font-weight: 600; */
-    }
-
-    &--left {
-      top: 50%;
-      left: -720px;
-
-      @include respond(tab-land) {
-        left: -50%;
-      }
-
-      @include respond(tab-port) {
-        left: -80%;
-      }
-    }
-
-    &--right {
-      top: 50%;
-      right: -1137px;
-
-      @include respond(tab-land) {
-        right: -898px;
-      }
-
-      @include respond(tab-port) {
-        right: -700px;
-      }
     }
   }
 }
 
 .navigation {
-  &__list {
+  @include respond(phone) {
+    display: none;
   }
 
   &__link {
@@ -314,5 +335,31 @@ export default {
 
     color: $color-black;
   }
+}
+
+.swiper-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-33%, -50%);
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: transparent;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
 </style>
