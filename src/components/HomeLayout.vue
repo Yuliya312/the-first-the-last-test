@@ -20,7 +20,7 @@
           </ul>
         </nav>
       </div>
-      <swiper
+      <!-- <swiper
         ref="mySwiper"
         :options="swiperOption"
         class="header__title-slider"
@@ -35,7 +35,20 @@
           <p class="header__bg-title">{{ title }}</p>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+      </swiper> -->
+      <div v-swiper="swiperOption" class="header__title-slider">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <p class="header__bg-title">{{ title }}</p>
+          </div>
+          <div class="swiper-slide">
+            <p class="header__heading">{{ title }}</p>
+          </div>
+          <div class="swiper-slide">
+            <p class="header__bg-title">{{ title }}</p>
+          </div>
+        </div>
+      </div>
       <div
         class="header__drag"
         id="drag"
@@ -63,14 +76,15 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
+// import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
+import { directive } from "vue-awesome-swiper";
 
 export default {
   name: "HomeLayout",
-  components: {
-    Swiper,
-    SwiperSlide
-  },
+  // components: {
+  //   Swiper,
+  //   SwiperSlide
+  // },
   data: () => ({
     links: [
       {
