@@ -20,11 +20,11 @@
           </ul>
         </nav>
       </div>
-      <swiper ref="mySwiper" :options="swiperOption">
-        <swiper-slide >
+      <swiper ref="mySwiper" :options="swiperOption" class="header__title-slider">
+        <swiper-slide>
           <p class="header__bg-title">{{ title }}</p>
         </swiper-slide>
-        <swiper-slide >
+        <swiper-slide>
           <p class="header__heading">{{ title }}</p>
         </swiper-slide>
         <swiper-slide>
@@ -60,7 +60,6 @@
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.css";
 
 export default {
   name: "HomeLayout",
@@ -287,8 +286,18 @@ export default {
     object-fit: cover;
   }
 
+  &__title-slider {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-28%, -50%);
+    z-index: 2;
+    /* transform: translateY(235%); */
+  }
+
   &__heading {
     width: 950px;
+    height: 100%;
     text-align: center;
     text-transform: uppercase;
     mix-blend-mode: darken;
@@ -347,31 +356,5 @@ export default {
 
     color: $color-black;
   }
-}
-
-.swiper-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-33%, -50%);
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: transparent;
-
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
 }
 </style>
