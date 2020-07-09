@@ -18,7 +18,7 @@ let router = new Router({
       name: "nav-menu",
       props: true,
       component: NavMenu
-    },
+    }
   ],
   mode: "history"
 })

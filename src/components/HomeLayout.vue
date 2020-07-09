@@ -20,7 +20,7 @@
           </ul>
         </nav>
       </div>
-      <!-- <swiper
+      <swiper
         ref="mySwiper"
         :options="swiperOption"
         class="header__title-slider"
@@ -35,8 +35,8 @@
           <p class="header__bg-title">{{ title }}</p>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
-      </swiper> -->
-      <div v-swiper="swiperOption" class="header__title-slider">
+      </swiper>
+      <!-- <div v-swiper="swiperOption" class="header__title-slider">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <p class="header__bg-title">{{ title }}</p>
@@ -48,7 +48,7 @@
             <p class="header__bg-title">{{ title }}</p>
           </div>
         </div>
-      </div>
+      </div> -->
       <div
         class="header__drag"
         id="drag"
@@ -136,13 +136,13 @@ export default {
       let img = galery.querySelector(".header__img");
       let img_x = mouseX - this.coords(galery).x;
       let img_y = mouseY - this.coords(galery).y;
-      console.log(img_x, img_y);
+      // console.log(img_x, img_y);
       img.style.transform = `translateY(-${img_y / 100}px) translateX(-${img_x /
         40}px) translateZ(100px)`;
     },
     coords(el) {
       let coords = el.getBoundingClientRect();
-      console.log(coords);
+      // console.log(coords);
       return {
         x: coords.left / 2,
         y: coords.top / 2
@@ -308,7 +308,7 @@ export default {
   }
 
   &__title-slider {
-    position: absolute !important;
+    /* position: absolute !important; */
     top: 50%;
     left: 50%;
     transform: translate(-28%, -50%);
