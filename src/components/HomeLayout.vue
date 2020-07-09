@@ -20,7 +20,11 @@
           </ul>
         </nav>
       </div>
-      <swiper ref="mySwiper" :options="swiperOption" class="header__title-slider">
+      <swiper
+        ref="mySwiper"
+        :options="swiperOption"
+        class="header__title-slider"
+      >
         <swiper-slide>
           <p class="header__bg-title">{{ title }}</p>
         </swiper-slide>
@@ -59,7 +63,7 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
 
 export default {
   name: "HomeLayout",
@@ -104,6 +108,9 @@ export default {
       return this.$refs.mySwiper.$swiper;
     }
   },
+  directives: {
+    swiper: directive
+  },
   methods: {
     move($event) {
       console.log($event);
@@ -121,11 +128,11 @@ export default {
     },
     coords(el) {
       let coords = el.getBoundingClientRect();
-      console.log(coords)
+      console.log(coords);
       return {
         x: coords.left / 2,
         y: coords.top / 2
-      }
+      };
     },
     mouseIsMoving(e) {
       this.tooltipStyle.left = e.pageX;
@@ -135,7 +142,7 @@ export default {
   },
   mounted() {
     window.addEventListener("mousemove", this.mouseIsMoving);
-    this.swiper.slideTo(1, 1000, false)
+    this.swiper.slideTo(1, 1000, false);
   },
   destroyed() {
     window.removeEventListener("mousemove", this.mouseIsMoving);
